@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    build: .
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: ${WP_DB_HOST}
+      WORDPRESS_DB_USER: ${WP_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WP_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WP_DB_NAME}
+      GITHUB_TOKEN: ${TOKEN}
+    volumes:
+      - ./config/php.conf.ini:/usr/local/etc/php/conf.d/php.ini
+      - ./wordpress:/var/www/html
+      - ./kadence-theme:/var/www/html/wp-content/themes
+      - ./kadence-plugins:/var/www/html/wp-content/plugins
+  db:
+    image: ${MYSQL_IMG}
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PSWD}
+      - MYSQL_DATABASE=${MYSQL_DB}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PSWD}
+    volumes:
+      - ./db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
