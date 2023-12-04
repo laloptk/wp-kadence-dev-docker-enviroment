@@ -20,6 +20,7 @@ RUN curl -s -o /usr/local/bin/wp \
 
 RUN npm i -g npm@latest
 RUN npm i -g concurrently
+RUN npm i -g gulp
 
 # Download Kadence Theme from GitHub
 
